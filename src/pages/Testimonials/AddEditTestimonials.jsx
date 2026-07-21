@@ -5,7 +5,7 @@ import { useLocation, Link, useNavigate, useParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import * as Yup from "yup";
 import { QUOTE_VALIDATION, NAME_VALIDATION, RATING_VALIDATION, CLIENT_TYPE_VALIDATION, IMAGE_VALIDATION } from '../../common/ErrorMessageCommom';
-import { ImagePlus } from "lucide-react";
+import { ImagePlus, Eye, Trash2 } from "lucide-react";
 import { testimonialsData } from '../../data/testimonial.js';
 
 const AddEditTestimonials = () => {
@@ -131,42 +131,65 @@ const AddEditTestimonials = () => {
                                 </div>
 
 
+
                                 <div className="w-full p-1.5 xl:p-2.5 2xl:p-3.5 relative">
+                                    <input
+                                        type="file"
+                                        ref={fileInputRef}
+                                        className="hidden"
+                                        accept="'image/jpg, image/png, image/webp, image/gif'"
+                                        onChange={(e) => handleImageUpload(e, setFieldValue)}
+                                    />
                                     <label className="label">Image <span className='text-red '>*</span></label>
-                                    <div className="input relative border border-dashed flex items-center justify-between">
-                                        <div className="text-center flex items-center justify-center space-x-2 w-full h-[25px]">
-                                            {values?.image ? (
-                                                // <img
-                                                //     src={values?.image instanceof File ? URL.createObjectURL(values?.image) : (import.meta.env.VITE_API_URL + values?.image)}
-                                                //     alt="preview"
-                                                //     className='w-full h-full object-contain'
-                                                // />
-                                                <img
-                                                    src={
-                                                        values.image instanceof File
-                                                            ? URL.createObjectURL(values.image)
-                                                            : values.image
-                                                    }
-                                                    alt="preview"
-                                                    className="w-full h-full object-contain"
-                                                />
-                                            ) : (
-                                                <>
-                                                    <span className='text-[20px] 2xl:text-[24px] font-medium text-g1 icon-export'><ImagePlus size={18} /></span>
-                                                    <span className="text-12 md:text-14 2xl:text-16 text-g7">Upload Photo</span>
-                                                </>
-                                            )}
-                                        </div>
-                                        <input
-                                            type="file"
-                                            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                                            name="image"
-                                            accept="'image/jpg, image/png, image/webp, image/gif'"
-                                            onChange={(e) => setFieldValue("image", e.currentTarget.files[0])}
-                                        />
+                                    <div
+                                        className="input relative border border-dashed flex items-center justify-between cursor-pointer"
+                                        onClick={() => fileInputRef.current?.click()}
+                                    >
+                                        {!values.image ? (
+                                            <div className="text-center flex items-center justify-center space-x-2 w-full">
+                                                <span className="text-[20px] 2xl:text-[24px] font-medium text-g1"><ImagePlus size={18} /></span>
+                                                <span className="text-12 md:text-14 2xl:text-16 text-g7">Upload Photo</span>
+                                            </div>
+                                        ) : (
+                                            <>
+                                                <span className='text-12 md:text-14 2xl:text-16 text-g1 truncate text-ellipsis overflow-hidden'>
+                                                    {values.image instanceof File ? values.image.name : values.image.split("/").pop()}
+                                                </span>
+                                                <div className="flex items-center space-x-2">
+                                                    <span
+                                                        className="text-[18px] lg:text-[20px] xl:text-[24px] text-g1 cursor-pointer"
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            const url = values.image instanceof File ? URL.createObjectURL(values.image) : import.meta.env.VITE_API_URL + values.image;
+                                                            window.open(url, '_blank');
+                                                        }}
+                                                    ><Eye size={25} /></span>
+                                                    <span
+                                                        className="text-[18px] lg:text-[20px] xl:text-[24px] text-red cursor-pointer"
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            handleDeleteImage(setFieldValue);
+                                                        }}
+                                                    ><Trash2 size={22} /></span>
+                                                </div>
+                                            </>
+                                        )}
                                     </div>
                                     <ErrorMessage name="image" component="span" className="error -bottom-2" />
-                                    
+                                    {values.image && (
+                                        <div className="mt-4">
+                                            <p className="text-12 text-g7 mb-2">Preview:</p>
+                                            <img
+                                                src={
+                                                    values.image instanceof File
+                                                        ? URL.createObjectURL(values.image)
+                                                        : values.image
+                                                }
+                                                alt="Preview"
+                                                className="w-32 h-32 object-cover rounded-lg border border-l2 shadow-sm"
+                                            />
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </Form>
