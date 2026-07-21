@@ -1,4 +1,4 @@
-import { ErrorMessage, Field, Form, Formik } from 'formik'
+import { ErrorMessage, Field, Form, Formik ,FieldArray} from 'formik'
 import React from 'react'
 import toast from 'react-hot-toast'
 import { useLocation, Link, useNavigate, useParams } from 'react-router-dom'
@@ -13,8 +13,6 @@ const AddEditOurServices = () => {
     const navigate = useNavigate()
     const location = useLocation()
     const { id } = useParams()
-
-    
     //start static add now for the fetch the data edit time
     // const { serviceData } = location.state || {}
     const serviceData = servicesData.find(
@@ -194,11 +192,46 @@ const AddEditOurServices = () => {
                                         </div>
                                     )}
                                 </div>
+
                                 <div className="w-full p-1.5 xl:p-2.5 2xl:p-3.5 relative">
                                     <label className="label">Description <span className='text-red '>*</span></label>
                                     <Field as="textarea" name="description" className="input h-[155px] py-3" placeholder="Enter Description" />
                                     <ErrorMessage name="description" component="span" className="error" />
                                 </div>
+                            </div>
+
+
+                            {/* Service wise subtitle || price || minute */}
+                            <div className="w-full p-1.5 xl:p-2.5 2xl:p-3.5">
+                                <div className="flex items-center justify-between mb-4">
+                                    <label className="label mb-0">
+                                        Service Wise Subtitle || Price || Minute
+                                    </label>
+
+                                    <button
+                                        type="button"
+                                        className="btn_primary w-auto"
+                                        // onClick={() =>
+                                        //     setFieldValue("carWisePrice", [
+                                        //         ...values.carWisePrice,
+                                        //         {
+                                        //             name: "",
+                                        //             price: "",
+                                        //         },
+                                        //     ])
+                                        // }
+                                    >
+                                        Add More
+                                    </button>
+                                </div>
+
+
+
+                                <FieldArray>
+                                    
+                    
+                                </FieldArray>
+
                             </div>
                         </Form>
                     }

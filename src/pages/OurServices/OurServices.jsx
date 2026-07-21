@@ -48,9 +48,9 @@ const OurServices = () => {
                   : `₹${service?.price}`}
               </span>
 
-              {/* <span className="font-medium  capitalize text-g1">
+              <span className="font-medium capitalize text-g1">
                 {service?.minute}
-              </span> */}
+              </span>
             </div>
           ))}
         </div>
