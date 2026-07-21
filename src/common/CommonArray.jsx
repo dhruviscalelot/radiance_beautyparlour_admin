@@ -37,6 +37,13 @@ export const MainMenu = [
         icon: Images,
     },
     {
+        displayname: "Contact",
+        route: "/contact",
+        isOpen: false,
+        view: true,
+        icon: Images,
+    },
+    {
         displayname: "Testimonials",
         route: "/testimonials",
         isOpen: false,

@@ -9,6 +9,7 @@ import Gallery from '../pages/Gallery/Gallery';
 import AddEditOurServices from '../pages/OurServices/AddEditOurServices';
 import Testimonials from '../pages/Testimonials/Testimonials';
 import AddEditTestimonials from '../pages/Testimonials/AddEditTestimonials';
+import AllContacts from "../pages/Contact/AllContacts"
 
 
 const AllRoutes = () => {
@@ -35,6 +36,9 @@ const AllRoutes = () => {
                         <Route path='/testimonials' element={<Testimonials />} />
                         <Route path='/testimonials/create' element={<AddEditTestimonials />} />
                         <Route path='/testimonials/edit/:id' element={<AddEditTestimonials />} />
+
+                        {/* Contact */}
+                        <Route path='/contact' element={<AllContacts />} />
 
 
                     </Route>
