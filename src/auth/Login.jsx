@@ -52,7 +52,7 @@ const Login = () => {
   return (
     <div className="w-full min-h-screen flex relative py-6 lg:py-8 2xl:py-10 px-5 2xl:px-6 font-Lexend bg-l3 overflow-hidden">
       <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-[linear-gradient(135deg,#b76e79_0%,#8f4250_45%,#2f2527_100%)]"></div>
+        <div className="absolute inset-0 bg-[linear-gradient(135deg,#C99789_0%,#4A3933_45%,#1E1614_100%)]"></div>
         <div className="absolute inset-0 bg-black/20"></div>
       </div>
 
@@ -131,7 +131,7 @@ const Login = () => {
               alt="Beauty parlour interior"
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(47,37,39,0.08)_0%,rgba(47,37,39,0.72)_100%)]"></div>
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(74,57,51,0.08)_0%,rgba(74,57,51,0.72)_100%)]"></div>
             <div className="absolute left-6 right-6 bottom-6 md:left-8 md:right-8 md:bottom-8 text-white">
               <span className="inline-block mb-3 rounded-full bg-white/20 px-4 py-1.5 text-12 2xl:text-14 font-semibold uppercase tracking-[0.16em]">
                 Salon Care
