@@ -27,6 +27,36 @@ const OurServices = () => {
     },
     { key: "title", label: "Title", renderCell: (key, row) => row?.title || "-" },
     { key: "description", label: "Description", renderCell: (key, row) => <div className="max-w-xs truncate">{row?.description || "-"}</div> },
+    // { key: "price", label: "Price", renderCell: (key, row) => row?.serviceDetails?.[0]?.price || "-" },
+    {
+      key: "serviceDetails",
+      label: "Service Details",
+      renderCell: (key, row) => (
+        <div className="flex flex-col space-y-1 text-sm">
+          {row?.serviceDetails?.map((service, index) => (
+            <div
+              key={index}
+              className="flex items-center justify-between gap-3 min-w-[180px]"
+            >
+              <span className="font-medium capitalize text-g1">
+                {service?.subtitle}
+              </span>
+
+              <span className="text-primary font-semibold">
+                {service?.price === "Available"
+                  ? "Available"
+                  : `₹${service?.price}`}
+              </span>
+
+              {/* <span className="font-medium  capitalize text-g1">
+                {service?.minute}
+              </span> */}
+            </div>
+          ))}
+        </div>
+      )
+    },
+
     {
       key: "action", label: "Action", renderCell: (key, row) => <div className="flex items-center space-x-3">
         <span className="text-[18px] lg:text-[20px] xl:text-[24px] text-g1 cursor-pointer" onClick={() => navigate(`./edit/${row.id}`,)} ><Pencil size={18} /></span>
