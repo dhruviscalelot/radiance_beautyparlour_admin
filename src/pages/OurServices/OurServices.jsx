@@ -38,17 +38,17 @@ const OurServices = () => {
               key={index}
               className="flex items-center justify-between gap-3 min-w-[180px]"
             >
-              <span className="font-medium capitalize text-g1">
+              <span className="font-medium capitalize text-g1 w-[160px] text-left truncate">
                 {service?.subtitle}
               </span>
 
-              <span className="text-primary font-semibold">
+              <span className="text-primary font-semibold flex-1 text-center">
                 {service?.price === "Available"
                   ? "Available"
                   : `₹${service?.price}`}
               </span>
 
-              <span className="font-medium capitalize text-g1">
+              <span className="font-medium capitalize text-g1 w-[90px] text-right">
                 {service?.minute}
               </span>
             </div>

@@ -31,12 +31,22 @@ const AddEditOurServices = () => {
         image: serviceData?.icon || "",
         title: serviceData?.title || "",
         description: serviceData?.description || "",
+        serviceDetails: serviceData?.serviceDetails || [
+            { subtitle: "", price: "", minute: "" }
+        ],
     }
 
     const HandleValidation = Yup.object().shape({
         image: Yup.mixed().required(ICON_VALIDATION),
         title: Yup.string().required(TITLE_VALIDATION),
         description: Yup.string().required(DESCRIPTION_VALIDATION),
+        serviceDetails: Yup.array().of(
+            Yup.object().shape({
+                subtitle: Yup.string().required("Subtitle is required"),
+                price: Yup.string().required("Price is required"),
+                minute: Yup.string().required("Minute is required"),
+            })
+        )
     })
 
     const handleImageUpload = (e, setFieldValue) => {
@@ -70,7 +80,8 @@ const AddEditOurServices = () => {
                 title: values.title,
                 desc: values.description,
                 image: imageUrl,
-                sortOrder: values.sortOrder
+                sortOrder: values.sortOrder,
+                serviceDetails: values.serviceDetails,
             }
 
             const response = await dispatch(saveService(finalValues))
@@ -203,35 +214,108 @@ const AddEditOurServices = () => {
 
                             {/* Service wise subtitle || price || minute */}
                             <div className="w-full p-1.5 xl:p-2.5 2xl:p-3.5">
-                                <div className="flex items-center justify-between mb-4">
-                                    <label className="label mb-0">
-                                        Service Wise Subtitle || Price || Minute
-                                    </label>
+                                <FieldArray name="serviceDetails">
+                                    {({ push, remove }) => (
+                                        <div className="space-y-4">
+                                            <div className="flex items-center justify-between mb-4">
+                                                <label className="label mb-0">
+                                                    Service Wise Subtitle | Price | Minute
+                                                </label>
 
-                                    <button
-                                        type="button"
-                                        className="btn_primary w-auto"
-                                        // onClick={() =>
-                                        //     setFieldValue("carWisePrice", [
-                                        //         ...values.carWisePrice,
-                                        //         {
-                                        //             name: "",
-                                        //             price: "",
-                                        //         },
-                                        //     ])
-                                        // }
-                                    >
-                                        Add More
-                                    </button>
-                                </div>
+                                                <button
+                                                    type="button"
+                                                    className="btn_primary w-auto"
+                                                    onClick={() => push({ subtitle: "", price: "", minute: "" })}
+                                                >
+                                                    Add More
+                                                </button>
+                                            </div>
 
+                                            {values.serviceDetails?.map((item, index) => (
+                                                <div
+                                                    key={index}
+                                                    className="border border-l2 rounded-xl p-4"
+                                                >
+                                                    <div className="flex flex-wrap items-end -mx-2">
+                                                        {/* Subtitle */}
+                                                        <div className="w-full md:w-4/12 px-2">
+                                                            <label className="label">
+                                                                Subtitle / Service Name
+                                                            </label>
 
+                                                            <Field
+                                                                type="text"
+                                                                name={`serviceDetails.${index}.subtitle`}
+                                                                className="input"
+                                                                placeholder="Enter Subtitle"
+                                                            />
 
-                                <FieldArray>
-                                    
-                    
+                                                            <ErrorMessage
+                                                                name={`serviceDetails.${index}.subtitle`}
+                                                                component="span"
+                                                                className="error"
+                                                            />
+                                                        </div>
+
+                                                        {/* Price */}
+                                                        <div className="w-full md:w-3/12 px-2">
+                                                            <label className="label">
+                                                                Price / Available
+                                                            </label>
+
+                                                            <Field
+                                                                type="text"
+                                                                name={`serviceDetails.${index}.price`}
+                                                                className="input"
+                                                                placeholder="Enter Price"
+                                                            />
+
+                                                            <ErrorMessage
+                                                                name={`serviceDetails.${index}.price`}
+                                                                component="span"
+                                                                className="error"
+                                                            />
+                                                        </div>
+
+                                                        {/* Minute */}
+                                                        <div className="w-full md:w-3/12 px-2">
+                                                            <label className="label">
+                                                                Minute
+                                                            </label>
+
+                                                            <Field
+                                                                type="text"
+                                                                name={`serviceDetails.${index}.minute`}
+                                                                className="input"
+                                                                placeholder="Enter Minute"
+                                                            />
+
+                                                            <ErrorMessage
+                                                                name={`serviceDetails.${index}.minute`}
+                                                                component="span"
+                                                                className="error"
+                                                            />
+                                                        </div>
+
+                                                        {/* Remove Button */}
+                                                        <div className="w-full md:w-2/12 px-2">
+                                                            <button
+                                                                type="button"
+                                                                className="btn_secondary w-full"
+                                                                onClick={() => remove(index)}
+                                                                disabled={
+                                                                    values.serviceDetails.length === 1
+                                                                }
+                                                            >
+                                                                Remove
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
                                 </FieldArray>
-
                             </div>
                         </Form>
                     }
