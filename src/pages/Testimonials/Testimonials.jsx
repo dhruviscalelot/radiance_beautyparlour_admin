@@ -20,6 +20,20 @@ const Testimonials = () => {
         { key: "quote", label: "Quote", renderCell: (key, row) => <div className="max-w-xs truncate">{row?.quote || "-"}</div> },
         { key: "clientType", label: "Client Type", renderCell: (key, row) => row?.clientType || "-" },
         {
+            key: "image",
+            label: "Image",
+            renderCell: (key, row) =>
+                row?.image ? (
+                    <img
+                        src={row.image}
+                        alt="Gallery"
+                        className="h-10 w-10 rounded-lg object-cover"
+                    />
+                ) : (
+                    "-"
+                ),
+        },
+        {
             key: "action", label: "Action", renderCell: (key, row) => <div className="flex items-center space-x-3">
                 <span className="text-[18px] lg:text-[20px] xl:text-[24px] text-g1 cursor-pointer" onClick={() => navigate(`./edit/${row.id}`,)} ><Pencil size={18} /></span>
                 <span className="icon-trash text-[18px] lg:text-[20px] xl:text-[24px] text-red cursor-pointer" onClick={() => DeleteOpenDialog(row)} ><Trash2 size={18} /></span>

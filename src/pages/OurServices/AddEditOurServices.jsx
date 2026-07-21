@@ -212,6 +212,10 @@ const AddEditOurServices = () => {
                             </div>
 
 
+
+
+
+
                             {/* Service wise subtitle || price || minute */}
                             <div className="w-full p-1.5 xl:p-2.5 2xl:p-3.5">
                                 <FieldArray name="serviceDetails">

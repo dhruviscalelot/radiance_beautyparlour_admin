@@ -4,7 +4,7 @@ import toast from 'react-hot-toast'
 import { useLocation, Link, useNavigate, useParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import * as Yup from "yup";
-import { QUOTE_VALIDATION, NAME_VALIDATION, RATING_VALIDATION, CLIENT_TYPE_VALIDATION } from '../../common/ErrorMessageCommom';
+import { QUOTE_VALIDATION, NAME_VALIDATION, RATING_VALIDATION, CLIENT_TYPE_VALIDATION, IMAGE_VALIDATION } from '../../common/ErrorMessageCommom';
 import { ImagePlus } from "lucide-react";
 import { testimonialsData } from '../../data/testimonial.js';
 
@@ -32,6 +32,8 @@ const AddEditTestimonials = () => {
         rating: testimonialData?.rating || "",
         quote: testimonialData?.quote || "",
         clienttype: testimonialData?.clientType || "",
+        image: testimonialData?.image || "",
+        type: "image",
     }
 
     const HandleValidation = Yup.object().shape({
@@ -39,6 +41,7 @@ const AddEditTestimonials = () => {
         rating: Yup.mixed().required(RATING_VALIDATION),
         quote: Yup.string().required(QUOTE_VALIDATION),
         clienttype: Yup.string().required(CLIENT_TYPE_VALIDATION),
+        image: Yup.mixed().required(IMAGE_VALIDATION),
     })
 
     const handleImageUpload = (e, setFieldValue) => {
@@ -123,8 +126,47 @@ const AddEditTestimonials = () => {
 
                                 <div className="w-full p-1.5 xl:p-2.5 2xl:p-3.5 relative">
                                     <label className="label">Quote <span className='text-red '>*</span></label>
-                                    <Field as="textarea" name="quote" className="input h-[155px] py-3" placeholder="Enter Customer Quote/Review" />
+                                    <Field as="textarea" name="quote" className="input h-[130px] py-3" placeholder="Enter Customer Quote/Review" />
                                     <ErrorMessage name="quote" component="span" className="error" />
+                                </div>
+
+
+                                <div className="w-full p-1.5 xl:p-2.5 2xl:p-3.5 relative">
+                                    <label className="label">Image <span className='text-red '>*</span></label>
+                                    <div className="input relative border border-dashed flex items-center justify-between">
+                                        <div className="text-center flex items-center justify-center space-x-2 w-full h-[25px]">
+                                            {values?.image ? (
+                                                // <img
+                                                //     src={values?.image instanceof File ? URL.createObjectURL(values?.image) : (import.meta.env.VITE_API_URL + values?.image)}
+                                                //     alt="preview"
+                                                //     className='w-full h-full object-contain'
+                                                // />
+                                                <img
+                                                    src={
+                                                        values.image instanceof File
+                                                            ? URL.createObjectURL(values.image)
+                                                            : values.image
+                                                    }
+                                                    alt="preview"
+                                                    className="w-full h-full object-contain"
+                                                />
+                                            ) : (
+                                                <>
+                                                    <span className='text-[20px] 2xl:text-[24px] font-medium text-g1 icon-export'><ImagePlus size={18} /></span>
+                                                    <span className="text-12 md:text-14 2xl:text-16 text-g7">Upload Photo</span>
+                                                </>
+                                            )}
+                                        </div>
+                                        <input
+                                            type="file"
+                                            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                                            name="image"
+                                            accept="'image/jpg, image/png, image/webp, image/gif'"
+                                            onChange={(e) => setFieldValue("image", e.currentTarget.files[0])}
+                                        />
+                                    </div>
+                                    <ErrorMessage name="image" component="span" className="error -bottom-2" />
+                                    
                                 </div>
                             </div>
                         </Form>
